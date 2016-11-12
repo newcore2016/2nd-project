@@ -73,7 +73,7 @@ class GameBoardVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "grass")
+        backgroundImage.image = UIImage(named: "background")
         self.view.insertSubview(backgroundImage, at: 0)
         // Switch sound
         switchPath = Bundle.main.path(forResource: "switch", ofType: "wav")
@@ -180,8 +180,6 @@ class GameBoardVC: UIViewController {
         }
         winningSound.play()
     }
-    
-
     
     // cell tapped event
     func tapDetected(_ sender: UITapGestureRecognizer) {
@@ -497,6 +495,7 @@ class GameBoardVC: UIViewController {
         imageView.addGestureRecognizer(singleTap)
         imageView.image = image
 //        boardGame.image = image
+//        boardGame.backgroundColor = UIColor.white
         boardGame.image = image.maskWithColor(color: UIColor.brown)
         boardGame.frame = CGRect(x: 10, y: UIScreen.main.bounds.height/2 - 30, width: UIScreen.main.bounds.width-20 , height: (UIScreen.main.bounds.height)/2)
         boardGame.isExclusiveTouch = true
@@ -594,24 +593,28 @@ class GameBoardVC: UIViewController {
     }
     
     func mixingCells(times: Int) {
-        for _ in 1...times {
-            for i in 0..<cellGameArray.count {
-//                    let cell1 = cellGameArray[col][row]
-//                    let xTmp = cell1.x
-//                    let yTmp = cell1.y
-//                    let imageTmp = cell1.image
-//                    let cell2 = cellGameArray[random(max: colNo)][random(max: rowNo)]
-//                    cell1.x = cell2.x
-//                    cell1.y = cell2.y
-//                    cell1.image = cell2.image
-//                    cell2.x = xTmp
-//                    cell2.y = yTmp
-//                    cell2.image = imageTmp
-                let cell = cellGameArray[i] as CellGame
-                let randomX = random(max: Int(self.view.frame.width - 20)) + 10
-                let randomY = random(max: Int(boardGame.frame.minY - 10)) + 10
-                cell.frame.origin = CGPoint(x: randomX, y: randomY)
+//        for _ in 1...times {
+//            for i in 0..<cellGameArray.count {
+////                let cell = cellGameArray[i] as CellGame
+////                let randomX = random(max: Int(self.view.frame.width - 100)) + 50
+////                let randomY = random(max: Int(boardGame.frame.minY - 100)) + 50
+////                cell.frame.origin = CGPoint(x: randomX, y: randomY)
+//            }
+//        }
+        cellGameArray.shuffle()
+        let cell1 = cellGameArray[0] as CellGame
+        let startX:CGFloat = (self.view.frame.width - (4 * cell1.frame.width)) / 2
+        let startY:CGFloat = 100
+        var j = 0
+        for i in 0..<cellGameArray.count {
+            let cell = cellGameArray[i] as CellGame
+            if ( j > 3) {
+                j = 0
             }
+            let x = startX + (cell.frame.width + 5) * CGFloat(j)
+            let y = startY + (cell.frame.width + 5) * CGFloat((i / 4))
+            j += 1
+            cell.frame.origin = CGPoint(x: x, y: y)
         }
         
     }
@@ -829,6 +832,21 @@ extension UIImageView {
         
         pixel.deallocate(capacity: 4)
         return color
+    }
+}
+
+extension MutableCollection where Indices.Iterator.Element == Index {
+    /// Shuffles the contents of this collection.
+    mutating func shuffle() {
+        let c = count
+        guard c > 1 else { return }
+        
+        for (unshuffledCount, firstUnshuffled) in zip(stride(from: c, to: 1, by: -1), indices) {
+            let d: IndexDistance = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
+            guard d != 0 else { continue }
+            let i = index(firstUnshuffled, offsetBy: d)
+            swap(&self[firstUnshuffled], &self[i])
+        }
     }
 }
 
