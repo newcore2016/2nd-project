@@ -399,7 +399,9 @@ class GameBoardVC: UIViewController {
                     self.view.addSubview(audioBtn)
                     
                     
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+//                        self.audioBtn.removeFromSuperview()
+//                        self.startTimer()
 //                        self.makeGameBoard()
 //                    })
                 } else {
