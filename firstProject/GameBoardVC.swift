@@ -323,9 +323,6 @@ class GameBoardVC: UIViewController {
                     }
                     
                     let path = UIBezierPath()
-                    path.move(to: boardGame.center)
-                    path.addCurve(to: CGPoint(x: 301, y: 239), controlPoint1: CGPoint(x: 136, y: 373), controlPoint2: CGPoint(x: 178, y: 110))
-                    //                    path.addLine(to: self.view.center)
                     
                     // create a new CAKeyframeAnimation that animates the objects position
                     let anim = CAKeyframeAnimation(keyPath: "position")
@@ -357,9 +354,12 @@ class GameBoardVC: UIViewController {
                     }
                     scoreLabel.text = "\(score)"
                     
-                    stopTimer()
-//                    makeGameBoard()
+                    //stopTimer()
+                    
                     playWinningSound()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+                        self.makeGameBoard()
+                    })
                 } else {
                     // else, finish, update score
                     if playMode == 0 {
