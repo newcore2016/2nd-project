@@ -125,6 +125,7 @@ class Menu2VC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,NS
                 image.name = "Con vật \(i)"
                 image.id = Int64(i)
                 image.catalogueID = 1
+                image.audio = "animal\(i)"
                 catalogueAnimal.addToToImage(image)
             }
             // ----------------------
