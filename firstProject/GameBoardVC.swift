@@ -56,7 +56,7 @@ class GameBoardVC: UIViewController {
     var score:Int = 0
     //------------------------------------------------------------
     
-    let imageView = UIImageView() // UIImange for reference original image
+    //let imageView = UIImageView() // UIImange for reference original image
     // Switch sound
     var switchPath: String!
     var switchURL: URL!
@@ -117,24 +117,19 @@ class GameBoardVC: UIViewController {
         self.view.isUserInteractionEnabled = true
         self.boardGame.isUserInteractionEnabled = true
         
-
-        // reference original photo view
-        imageView.frame = CGRect(x: UIScreen.main.bounds.width/4, y: 60 , width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height / 4)
-//        self.view.addSubview(imageView)
         if(score > 0){
             scoreLabel.text = "\(score)"
         }else{
             scoreLabel.text = "0"
         }
         
-        scoreLabel.font = UIFont(name: scoreLabel.font.fontName, size: 30)
-        scoreLabel.frame = CGRect(x: 0, y: UIScreen.main.bounds.height/2 - 90 , width: UIScreen.main.bounds.width, height: 40)
+        scoreLabel.font = UIFont(name: scoreLabel.font.fontName, size: 20)
+        scoreLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.6, y: UIScreen.main.bounds.height * 0.01 , width: 50, height: 30)
         scoreLabel.textAlignment = .center
         scoreLabel.adjustsFontSizeToFitWidth = true
-        scoreLabel.textColor = UIColor.red
+        scoreLabel.textColor = UIColor.white
         self.view.addSubview(scoreLabel)
         makeGameBoard()
-//        self.view.addSubview(boardGame)
         self.view.insertSubview(boardGame, at: 1)
         // --------- TODO ----------
         let advertiment = UILabel()
@@ -363,7 +358,7 @@ class GameBoardVC: UIViewController {
                     
                     playWinningSound()
                     //continue button
-                    continueBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 70, y: UIScreen.main.bounds.height/2 , width: 70, height: 50))
+                    continueBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.005 , width: 70, height: 50))
                     continueBtn.setTitle("Chơi tiếp", for: .normal)
                     continueBtn.titleLabel?.text = "Chơi tiếp"
                     continueBtn.backgroundColor = UIColor.clear
@@ -372,7 +367,7 @@ class GameBoardVC: UIViewController {
 
                     
                     //audio button
-                    audioBtn = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height/2 , width: 80, height: 50))
+                    audioBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.7, y: UIScreen.main.bounds.height * 0.005 , width: 80, height: 50))
                     audioBtn.accessibilityHint = doingImgName
                     //print(doingImage.fileName)
                     
@@ -432,15 +427,33 @@ class GameBoardVC: UIViewController {
     
     // create game board
     func makeGameBoard(){
+        
+        //make left side
+        let leftView = UIView()
+        leftView.frame = CGRect(x:0, y : 0, width : UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height)
+        let leftImageView = UIImageView()
+        leftImageView.frame = CGRect(x:0, y : 0, width : UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height)
+        leftImageView.image = UIImage(named : "go")
+        leftView.addSubview(leftImageView)
+        
+        self.view.addSubview(leftView)
+        
+        
+        //leftView.back
+        
+        
+        
+        
 
-        imageView.isUserInteractionEnabled = true
+        //imageView.isUserInteractionEnabled = true
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.tapDetected(_:)))
         singleTap.numberOfTapsRequired = 1
         singleTap.numberOfTouchesRequired = 1
-        imageView.addGestureRecognizer(singleTap)
-        imageView.image = image
+        //imageView.addGestureRecognizer(singleTap)
+        //imageView.image = image
         boardGame.image = image.maskWithColor(color: UIColor.brown)
-        boardGame.frame = CGRect(x: 10, y: UIScreen.main.bounds.height/2 - 30, width: UIScreen.main.bounds.width-20 , height: (UIScreen.main.bounds.height)/2)
+        boardGame.frame = CGRect(x: UIScreen.main.bounds.width * 0.2, y: UIScreen.main.bounds.height * 0.2, width: ((UIScreen.main.bounds.width * 0.8) - 30) ,
+                                 height: (UIScreen.main.bounds.height) * 0.7)
         boardGame.isExclusiveTouch = true
 //        // remeove old tiles from board
         for view in cellGameArray {
@@ -452,7 +465,7 @@ class GameBoardVC: UIViewController {
             // timer progress bar
             timerBar.progressImage = UIImage(named: "progressBar")
             timerBar.trackTintColor = UIColor.blue
-            timerBar.frame = CGRect(x: 0, y: UIScreen.main.bounds.height/2 - 40, width: UIScreen.main.bounds.width, height: 5)
+            timerBar.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: UIScreen.main.bounds.height * 0.05, width: UIScreen.main.bounds.width/8, height: 5)
             timerBar.transform = timerBar.transform.scaledBy(x: 1, y: 5)
             self.view.addSubview(timerBar)
             // if player has solved more than specified x pics, increase level
@@ -484,6 +497,10 @@ class GameBoardVC: UIViewController {
                 let tmpImageView = CellGame()
                 let x = CGFloat(i - 1) * (boardGame.frame.width / CGFloat(colNo)) + boardGame.frame.minX
                 let y = CGFloat(j - 1) * (boardGame.frame.height / CGFloat(rowNo)) + boardGame.frame.minY
+                print("===")
+                print(x, y)
+                print(boardGame.frame.width / CGFloat(colNo), boardGame.frame.height / CGFloat(rowNo))
+                print("===")
                 tmpImageView.frame = CGRect(x: x  , y: y , width: boardGame.frame.width / CGFloat(colNo), height: boardGame.frame.height / CGFloat(rowNo))
                 let tmpImage = image.splitImage(rowNo: CGFloat(rowNo), colNo: CGFloat(colNo), xOrder: CGFloat(i-1), yOrder: CGFloat(j-1))
                 tmpImageView.image = tmpImage
@@ -520,20 +537,28 @@ class GameBoardVC: UIViewController {
     func mixingCells(times: Int) {
         cellGameArray.shuffle()
         let cell1 = cellGameArray[0] as CellGame
-        let startX:CGFloat = (self.view.frame.width - (4 * cell1.frame.width)) / 2
-        let startY:CGFloat = 100
-        var j = 0
-        for i in 0..<cellGameArray.count {
-            let cell = cellGameArray[i] as CellGame
-            if ( j > 3) {
-                j = 0
-            }
-            let x = startX + (cell.frame.width + 5) * CGFloat(j)
-            let y = startY + (cell.frame.width + 5) * CGFloat((i / 4))
-            j += 1
-            cell.frame.origin = CGPoint(x: x, y: y)
-        }
+//        let startX:CGFloat = (self.view.frame.width - (4 * cell1.frame.width)) / 2
+//        let startY:CGFloat = 80
+//        var j = 0
+//        for i in 0..<cellGameArray.count {
+//            let cell = cellGameArray[i] as CellGame
+//            if ( j > 3) {
+//                j = 0
+//            }
+//            let x = startX + (cell.frame.width + 5) * CGFloat(j)
+//            let y = startY + (cell.frame.width + 5) * CGFloat((i / 4))
+//            j += 1
+//            cell.frame.origin = CGPoint(x: x, y: y)
+//        }
         
+        let startX:CGFloat = 30
+        let startY:CGFloat = (self.view.frame.height - (4 * cell1.frame.height)) / 2
+        for i in 0..<cellGameArray.count{
+            let cell = cellGameArray[i] as CellGame
+            let x = startX
+            let y = startY + (cell.frame.height + 5) * CGFloat(i)
+            cell.frame.origin = CGPoint(x:x, y:y)
+        }
     }
 
     // back button pressed
@@ -692,7 +717,7 @@ class GameBoardVC: UIViewController {
         gameOverMenu.removeFromSuperview()
         boardGame.isUserInteractionEnabled = true
         boardGame.removeFromSuperview()
-        imageView.removeFromSuperview()
+        //imageView.removeFromSuperview()
         scoreLabel.removeFromSuperview()
         for view in cellGameArray {
             view.isUserInteractionEnabled = true
@@ -769,6 +794,7 @@ extension UIImage {
     }
     
 }
+
 
 extension UIImageView {
     func getPixelColorAtPoint(point:CGPoint) -> UIColor{

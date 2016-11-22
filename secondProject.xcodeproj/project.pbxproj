@@ -45,6 +45,7 @@
 		843120611DDB05E600A1EA46 /* animal10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 843120571DDB05E600A1EA46 /* animal10.mp3 */; };
 		843120631DDB0F0200A1EA46 /* listen-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 843120621DDB0F0100A1EA46 /* listen-button.png */; };
 		843120651DDB110C00A1EA46 /* PlayAudio.png in Resources */ = {isa = PBXBuildFile; fileRef = 843120641DDB110C00A1EA46 /* PlayAudio.png */; };
+		84F0A12F1DE00E0300958935 /* batdau.png in Resources */ = {isa = PBXBuildFile; fileRef = 84F0A12E1DE00E0300958935 /* batdau.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		843120571DDB05E600A1EA46 /* animal10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = animal10.mp3; sourceTree = "<group>"; };
 		843120621DDB0F0100A1EA46 /* listen-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listen-button.png"; sourceTree = "<group>"; };
 		843120641DDB110C00A1EA46 /* PlayAudio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayAudio.png; sourceTree = "<group>"; };
+		84F0A12E1DE00E0300958935 /* batdau.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = batdau.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				11EF8D3D1DAF4F5D00BA2643 /* GameBoardVC.swift */,
 				11EF8D3F1DAF4F5D00BA2643 /* Main.storyboard */,
 				11EF8D421DAF4F5D00BA2643 /* Assets.xcassets */,
+				84F0A12E1DE00E0300958935 /* batdau.png */,
 				843120641DDB110C00A1EA46 /* PlayAudio.png */,
 				843120621DDB0F0100A1EA46 /* listen-button.png */,
 				11EF8D441DAF4F5D00BA2643 /* LaunchScreen.storyboard */,
@@ -261,6 +264,7 @@
 				843120581DDB05E600A1EA46 /* animal1.mp3 in Resources */,
 				11EF8D411DAF4F5D00BA2643 /* Main.storyboard in Resources */,
 				843120651DDB110C00A1EA46 /* PlayAudio.png in Resources */,
+				84F0A12F1DE00E0300958935 /* batdau.png in Resources */,
 				8431205A1DDB05E600A1EA46 /* animal3.mp3 in Resources */,
 				843120591DDB05E600A1EA46 /* animal2.mp3 in Resources */,
 				843120611DDB05E600A1EA46 /* animal10.mp3 in Resources */,
