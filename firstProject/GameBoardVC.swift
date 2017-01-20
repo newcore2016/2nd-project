@@ -89,7 +89,7 @@ class GameBoardVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "background-1")
+        backgroundImage.image = UIImage(named: "background-2")
         self.view.insertSubview(backgroundImage, at: 0)
         // Switch sound
         switchPath = Bundle.main.path(forResource: "switch", ofType: "wav")
@@ -373,7 +373,7 @@ class GameBoardVC: UIViewController {
                     //continueBtn.setTitle("Chơi tiếp", for: .normal)
                     //continueBtn.titleLabel?.text = "Chơi tiếp"
                     continueBtn.backgroundColor = UIColor.clear
-                    continueBtn.setImage(UIImage(named: "continue.png"), for: .normal)
+                    continueBtn.setImage(UIImage(named: "next_btn"), for: .normal)
                     continueBtn.addTarget(self, action: #selector(self.continueGame), for: .touchUpInside)
 
                     
@@ -386,7 +386,7 @@ class GameBoardVC: UIViewController {
                     //audioBtn.accessibilityHint = doingImage.audio
                     //audioBtn.setTitle("Nghe", for: .normal)
                     //audioBtn.titleLabel?.text = "Nghe"
-                    audioBtn.setImage(UIImage(named: "sound.png"), for: .normal)
+                    audioBtn.setImage(UIImage(named: "sound2x.png"), for: .normal)
                     audioBtn.backgroundColor = UIColor.clear
                     
                     //print(doingImage.audio)
@@ -444,7 +444,7 @@ class GameBoardVC: UIViewController {
         leftView.frame = CGRect(x:0, y : 0, width : UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height)
         let leftImageView = UIImageView()
         leftImageView.frame = CGRect(x:0, y : 0, width : UIScreen.main.bounds.width * 0.2, height: UIScreen.main.bounds.height)
-        leftImageView.image = UIImage(named : "go")
+        leftImageView.image = UIImage(named : "left_wood")
         leftView.addSubview(leftImageView)
         
         self.view.addSubview(leftView)
@@ -475,6 +475,8 @@ class GameBoardVC: UIViewController {
         if playMode == 0 {
             // timer progress bar
             timerBar.progressImage = UIImage(named: "progressBar")
+            //timerBar.trackImage = UIImage(named: "time")
+            //timeBar.image = UIImage(named: "progressBar")
             timerBar.trackTintColor = UIColor.blue
             timerBar.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: UIScreen.main.bounds.height * 0.075, width: UIScreen.main.bounds.width/8, height: 5)
             timerBar.transform = timerBar.transform.scaledBy(x: 1, y: 5)
@@ -647,24 +649,26 @@ class GameBoardVC: UIViewController {
         //using uialertcontroller
         
         // Menu game over
-        gameOverMenu = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        gameOverMenu = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width/3, height: self.view.frame.height/3))
         let gameOver = UIView(frame: CGRect(x: self.view.center.x, y: self.view.center.y, width: 0, height: 0))
         gameOver.backgroundColor = UIColor.white
         //view.backgroundColor = UIColor(patternImage: UIImage(named: "myImage")!)
         
         
         
-        let replayBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
-        replayBtn.titleLabel?.text = "Chơi lại"
-        replayBtn.setTitle("Chơi lại", for: .normal)
-        replayBtn.backgroundColor = UIColor.blue
+        let replayBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 60))
+        //replayBtn.titleLabel?.text = "Chơi lại"
+        //replayBtn.setTitle("Chơi lại", for: .normal)
+        replayBtn.setImage(UIImage(named: "next_btn"), for: .normal)
+        //replayBtn.backgroundColor = UIColor.blue
         replayBtn.addTarget(self, action: #selector(self.replay), for: .touchUpInside)
         
         
-        let stopBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
-        stopBtn.setTitle("Thoát", for: .normal)
-        stopBtn.titleLabel?.text = "Thoát"
-        stopBtn.backgroundColor = UIColor.purple
+        let stopBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 60))
+        stopBtn.setImage(UIImage(named: "back_btn"), for: .normal)
+        //stopBtn.setTitle("Thoát", for: .normal)
+        //stopBtn.titleLabel?.text = "Thoát"
+        //stopBtn.backgroundColor = UIColor.purple
         stopBtn.addTarget(self, action: #selector(self.stop), for: .touchUpInside)
         
         gameOver.addSubview(replayBtn)
