@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  firstProject
@@ -9,9 +10,15 @@
 import UIKit
 import AVFoundation
 import CoreData
+import GoogleMobileAds
+import AudioToolbox
 
 class GameBoardVC: UIViewController {
+    
 
+    @IBOutlet weak var bnView: GADBannerView!
+    @IBOutlet weak var bannerView: GADBannerView!
+    
     var cellGameArray = Array<CellGame>()
     
     var colNo = 2 // default column number
@@ -78,12 +85,11 @@ class GameBoardVC: UIViewController {
     
     //continue button
     var continueBtn: UIButton!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "background")
+        backgroundImage.image = UIImage(named: "background-1")
         self.view.insertSubview(backgroundImage, at: 0)
         // Switch sound
         switchPath = Bundle.main.path(forResource: "switch", ofType: "wav")
@@ -93,6 +99,11 @@ class GameBoardVC: UIViewController {
         winningURL = URL(fileURLWithPath: winningPath!)
         successPath = Bundle.main.path(forResource: "success", ofType: "wav")
         successUrl = URL(fileURLWithPath: successPath!)
+        
+        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
+        bnView.adUnitID = "ca-app-pub-4676526515997802/7038627173"
+        bnView.rootViewController = self
+        bnView.load(GADRequest())
         createGame()
         
     }
@@ -122,21 +133,21 @@ class GameBoardVC: UIViewController {
         }else{
             scoreLabel.text = "0"
         }
+        var imgViewScore = UIImageView()
+        imgViewScore.image = UIImage(named: "score")
+        imgViewScore.frame = CGRect(x: UIScreen.main.bounds.width * 0.58, y: UIScreen.main.bounds.height * 0.009, width: 149, height: 50)
         
-        scoreLabel.font = UIFont(name: scoreLabel.font.fontName, size: 20)
-        scoreLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.6, y: UIScreen.main.bounds.height * 0.01 , width: 50, height: 30)
+        //score label
+        scoreLabel.font = UIFont(name: "HVD Comic Serif Pro", size: 20)
+        scoreLabel.frame = CGRect(x: imgViewScore.frame.width * 0.27, y: imgViewScore.frame.height * 0.2 , width: 50, height: 30)
         scoreLabel.textAlignment = .center
         scoreLabel.adjustsFontSizeToFitWidth = true
         scoreLabel.textColor = UIColor.white
-        self.view.addSubview(scoreLabel)
+        imgViewScore.addSubview(scoreLabel)
+        self.view.addSubview(imgViewScore)
+        
         makeGameBoard()
         self.view.insertSubview(boardGame, at: 1)
-        // --------- TODO ----------
-        let advertiment = UILabel()
-        advertiment.text = "Advertiment here!"
-        advertiment.textAlignment = .center
-        advertiment.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - 30, width: UIScreen.main.bounds.width, height: 30)
-        self.view.addSubview(advertiment)
         // -----------------------
         do {
             try switchSound = AVAudioPlayer(contentsOf: switchURL)
@@ -194,7 +205,7 @@ class GameBoardVC: UIViewController {
         let point = sender.location(in: imageView)
 //        let point1 = sender.location(in: imageView)
         let color = imageView.getPixelColorAtPoint(point: point)
-        scoreLabel.textColor = color
+        //scoreLabel.textColor = color
 
     }
     
@@ -262,7 +273,7 @@ class GameBoardVC: UIViewController {
             } else {
                 isTouchable = true
             }
-            scoreLabel.textColor = color
+            //scoreLabel.textColor = color
             if isFirstTap == true {
                 if playMode == 0 {
                     startTimer()
@@ -358,24 +369,24 @@ class GameBoardVC: UIViewController {
                     
                     playWinningSound()
                     //continue button
-                    continueBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.85, y: UIScreen.main.bounds.height * 0.005 , width: 70, height: 50))
-                    continueBtn.setTitle("Chơi tiếp", for: .normal)
-                    continueBtn.titleLabel?.text = "Chơi tiếp"
+                    continueBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.9, y: UIScreen.main.bounds.height * 0.005 , width: 40, height: 40))
+                    //continueBtn.setTitle("Chơi tiếp", for: .normal)
+                    //continueBtn.titleLabel?.text = "Chơi tiếp"
                     continueBtn.backgroundColor = UIColor.clear
-                    continueBtn.setImage(UIImage(named: "Next-Arrow.png"), for: .normal)
+                    continueBtn.setImage(UIImage(named: "continue.png"), for: .normal)
                     continueBtn.addTarget(self, action: #selector(self.continueGame), for: .touchUpInside)
 
                     
                     //audio button
-                    audioBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.7, y: UIScreen.main.bounds.height * 0.005 , width: 80, height: 50))
+                    audioBtn = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.8, y: UIScreen.main.bounds.height * 0.01 , width: 40, height: 40))
                     audioBtn.accessibilityHint = doingImgName
                     //print(doingImage.fileName)
                     
                     //TODO : need to fix
                     //audioBtn.accessibilityHint = doingImage.audio
-                    audioBtn.setTitle("Nghe", for: .normal)
-                    audioBtn.titleLabel?.text = "Nghe"
-                    audioBtn.setImage(UIImage(named: "PlayAudio.png"), for: .normal)
+                    //audioBtn.setTitle("Nghe", for: .normal)
+                    //audioBtn.titleLabel?.text = "Nghe"
+                    audioBtn.setImage(UIImage(named: "sound.png"), for: .normal)
                     audioBtn.backgroundColor = UIColor.clear
                     
                     //print(doingImage.audio)
@@ -452,7 +463,7 @@ class GameBoardVC: UIViewController {
         //imageView.addGestureRecognizer(singleTap)
         //imageView.image = image
         boardGame.image = image.maskWithColor(color: UIColor.brown)
-        boardGame.frame = CGRect(x: UIScreen.main.bounds.width * 0.2, y: UIScreen.main.bounds.height * 0.2, width: ((UIScreen.main.bounds.width * 0.8) - 30) ,
+        boardGame.frame = CGRect(x: UIScreen.main.bounds.width * 0.2, y: UIScreen.main.bounds.height * 0.2, width: ((UIScreen.main.bounds.width * 0.7) - 30) ,
                                  height: (UIScreen.main.bounds.height) * 0.7)
         boardGame.isExclusiveTouch = true
 //        // remeove old tiles from board
@@ -465,7 +476,7 @@ class GameBoardVC: UIViewController {
             // timer progress bar
             timerBar.progressImage = UIImage(named: "progressBar")
             timerBar.trackTintColor = UIColor.blue
-            timerBar.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: UIScreen.main.bounds.height * 0.05, width: UIScreen.main.bounds.width/8, height: 5)
+            timerBar.frame = CGRect(x: UIScreen.main.bounds.width/2 - 40, y: UIScreen.main.bounds.height * 0.075, width: UIScreen.main.bounds.width/8, height: 5)
             timerBar.transform = timerBar.transform.scaledBy(x: 1, y: 5)
             self.view.addSubview(timerBar)
             // if player has solved more than specified x pics, increase level
@@ -633,10 +644,15 @@ class GameBoardVC: UIViewController {
             print(pointInfoList[i].totalPoint)
         }
         
+        //using uialertcontroller
+        
         // Menu game over
         gameOverMenu = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         let gameOver = UIView(frame: CGRect(x: self.view.center.x, y: self.view.center.y, width: 0, height: 0))
-        gameOver.backgroundColor = UIColor.red
+        gameOver.backgroundColor = UIColor.white
+        //view.backgroundColor = UIColor(patternImage: UIImage(named: "myImage")!)
+        
+        
         
         let replayBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
         replayBtn.titleLabel?.text = "Chơi lại"
